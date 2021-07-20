@@ -19,6 +19,7 @@ gem 'puma', '~> 3.11'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -46,7 +47,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
-
+gem 'figaro'
 
 group :test do
   gem 'simplecov', require: false, group: :test
