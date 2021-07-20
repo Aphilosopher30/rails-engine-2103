@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe 'merchant show' do
 
   describe "merchant show" do
-
     it 'happy path' do
 
       merchant_1 = Merchant.create(name: "random_marchant_1")
