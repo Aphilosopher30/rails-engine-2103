@@ -14,11 +14,10 @@ RSpec.describe 'merchant show' do
       get "/api/v1/merchants/#{merchant_3.id}"
 
       merchant_response = JSON.parse(response.body, symbolize_names: true)
-
       expect(response).to be_successful
 
       expect(merchant_response[:data]).to have_key(:id)
-      expect(merchant_response[:data][:id]).to eq(merchant_id)
+      expect(merchant_response[:data][:id]).to eq(merchant_3.id.to_s)
       expect(merchant_response[:data][:attributes][:name]).to be_a(String)
       expect(merchant_response[:data][:attributes]).to have_key(:name)
     end
@@ -34,9 +33,14 @@ RSpec.describe 'merchant show' do
 
       get "/api/v1/merchants/#{not_an_id}"
 
-      response = JSON.parse(response.body, symbolize_names: true)
 
-      expect(response).to be_a(Hash)
+      # binding.pry
+
+      status = response.status
+      expect(response.status).to eq(404)
+
+      response = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to eq(nil)
     end
   end
 end
