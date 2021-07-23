@@ -58,22 +58,37 @@ class Api::V1::MerchantsController < ApplicationController
   def most_items
     number = params[:quantity]
     if number == nil
-      render json: {id: nil, data: {message: "invalid quantity"}}, :status => 200
+      render json: {id: nil, data: {message: "invalid quantity"}, error: "invalid quantity"}, :status => 400
     else
       merchants = Merchant.joins(items: :invoices).where('invoices.status = ?', "shipped")
         .group('merchants.id').select("merchants.*, sum(invoice_items.quantity) as total_count")
         .order(total_count: :desc).limit(number)
-        binding.pry
-
 
       count_list = merchants.map do |merch|
         ItemCount.new(merch.id, merch.total_count)
       end
-
+      # binding.pry
       render json: MerchantSailsCountSerializer.new(count_list)
     end
   end
 
-ItemCount
+  # def most_items
+  #
+  #   number = params[:quantity]
+  #   if number == nil
+  #     render json: {}, :status => 400
+  #     params[:quantity] = 0
+  #   end
+  #
+  #   merchants = Merchant.joins(items: :invoices).where('invoices.status = ?', "shipped")
+  #     .group('merchants.id').select("merchants.*, sum(invoice_items.quantity) as total_count")
+  #     .order(total_count: :desc).limit(number)
+  #
+  #   revenue_list = merchants.map do |merch|
+  #     ItemCount.new(merch.id, merch.total_count)
+  #   end
+  #
+  #   render json: MerchantSailsCountSerializer.new(revenue_list)
+  # end
 
 end
