@@ -11,21 +11,17 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      
       get "merchants/most_items", to: 'merchants#most_items'
       resources :merchants, only: [:index, :show]
-
       get '/merchants/:id/items', to: 'merchants#items'
 
 
       resources :items, only: [:index, :show, :create, :update]
       get '/items/:id/merchant', to: 'items#merchant'
 
-      # get 'revenue/merchants', to: 'merchants#'
-      # get "/merchants/find", 'merchants#find'
-      # get "/merchants/find_all", 'merchants#find_all'
-      #
-      # get '/items/find', 'items#find'
-      # get '/items/find_all', 'items#find_all'
+      get "revenue/merchants/:id", to: 'revenues#merchant'
+      get "revenue/merchants", to: 'revenues#most_profitable'
 
     end
   end

@@ -22,6 +22,13 @@ RSpec.describe 'merchant top sellers ' do
       invoice5 = customer.invoices.create(status: 'shipped')
       invoice6 = customer.invoices.create(status: 'shipped')
 
+      transactions = invoice1.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice2.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice3.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice4.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice5.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice6.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+
       invoice_item1 = InvoiceItem.create!(item: item0, invoice: invoice1, quantity: 4, unit_price: 5)
       invoice_item2 = InvoiceItem.create!(item: item0, invoice: invoice1, quantity: 2, unit_price: 5)
       invoice_item3 = InvoiceItem.create!(item: item0, invoice: invoice2, quantity: 4, unit_price: 5)
@@ -60,6 +67,13 @@ RSpec.describe 'merchant top sellers ' do
       invoice4 = customer.invoices.create(status: 'shipped')
       invoice5 = customer.invoices.create(status: 'shipped')
       invoice6 = customer.invoices.create(status: 'shipped')
+
+      transactions = invoice1.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice2.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice3.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice4.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice5.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+      transactions = invoice6.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
 
       invoice_item1 = InvoiceItem.create!(item: item0, invoice: invoice1, quantity: 4, unit_price: 5)
       invoice_item2 = InvoiceItem.create!(item: item0, invoice: invoice1, quantity: 2, unit_price: 5)
@@ -113,6 +127,14 @@ RSpec.describe 'merchant top sellers ' do
 
     invoice_item9 = InvoiceItem.create!(item: item2, invoice: invoice3, quantity: 3, unit_price: 5)
     invoice_item10 = InvoiceItem.create!(item: item2, invoice: invoice4, quantity: 2, unit_price: 5)
+
+
+    transactions = invoice1.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+    transactions = invoice2.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+    transactions = invoice3.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+    transactions = invoice4.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+    transactions = invoice5.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
+    transactions = invoice6.transactions.create!(result: 'success', credit_card_number: 12345, credit_card_expiration_date: "12/12")
 
 
     get "/api/v1/merchants/most_items?"
