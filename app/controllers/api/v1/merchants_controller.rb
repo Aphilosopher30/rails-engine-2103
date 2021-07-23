@@ -1,7 +1,6 @@
 class Api::V1::MerchantsController < ApplicationController
 
   def index
-
     page = params.fetch(:page, 1).to_i
     per_page = params.fetch(:per_page, 20).to_i
     pagination = paginate(page, per_page)
@@ -30,9 +29,51 @@ class Api::V1::MerchantsController < ApplicationController
     end
   end
 
-  def error_404
-    render json: {"data" => {}}, :status => 404
+  def find
+    merchant_exact = Merchant.find_by(name: params[:name])
+    if params[:name] == nil
+      error_404(["no name provided for the search"])
+    elsif merchant_exact == nil
+      find_close_match
+    else
+      render json: MerchantSerializer.new(merchant_exact)
+    end
   end
 
+  def find_close_match
+    merchant = Merchant.where("lower(name) like ?", "%#{params[:name].downcase}%")
+    if merchant == []
+      render json: {id: nil, data: {message: "no merchants found"}}, :status => 200
+    else
+      render json: MerchantSerializer.new(merchant.first)
+    end
+  end
+
+  def find_all
+    merchant = Merchant.where("lower(name) like ?", "%#{params[:name].downcase}%").order(:name)
+    render json: MerchantSerializer.new(merchant)
+  end
+
+
+  def most_items
+    number = params[:quantity]
+    if number == nil
+      render json: {id: nil, data: {message: "invalid quantity"}}, :status => 200
+    else
+      merchants = Merchant.joins(items: :invoices).where('invoices.status = ?', "shipped")
+        .group('merchants.id').select("merchants.*, sum(invoice_items.quantity) as total_count")
+        .order(total_count: :desc).limit(number)
+        binding.pry
+
+
+      count_list = merchants.map do |merch|
+        ItemCount.new(merch.id, merch.total_count)
+      end
+
+      render json: MerchantSailsCountSerializer.new(count_list)
+    end
+  end
+
+ItemCount
 
 end

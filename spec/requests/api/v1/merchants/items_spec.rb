@@ -16,8 +16,6 @@ RSpec.describe 'merchant items' do
       item12 = merchant1.items.create!(name: "twelve", description: "doodle", unit_price: 30)
       item20 = merchant2.items.create!(name: "twenty", description: "greee", unit_price: 6)
 
-
-
       get "/api/v1/merchants/#{merchant1.id}/items"
       item = JSON.parse(response.body, symbolize_names: true)
 
@@ -65,10 +63,15 @@ RSpec.describe 'merchant items' do
 
       get "/api/v1/merchants/#{merchant1.id+1}/items"
 
+      error = JSON.parse(response.body, symbolize_names: true)
 
       status = response.status
       expect(response.status).to eq(404)
 
+      expect(error[:id]).to eq(nil)
+      expect(error[:data]).to be_a(Hash)
+      expect(error[:data][:message]).to eq("your query could not be completed")
+      expect(error[:data][:errors]).to be_a(Array)
     end
   end
 

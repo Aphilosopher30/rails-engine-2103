@@ -12,8 +12,6 @@ RSpec.describe 'merchant requests' do
 
         merchants = JSON.parse(response.body)
 
-
-
         expect(merchants["data"].length).to eq(10)
 
         expect(merchants["data"][0]).to be_a(Hash)
@@ -160,6 +158,14 @@ RSpec.describe 'merchant requests' do
         expect(merchants["data"].length).to eq(20)
       end
 
+      it "no quantity will defaults to 20 and page number to 1 if nothing is entered" do
+        create_list(:merchant, 30)
+
+        get '/api/v1/merchants'
+        merchants = JSON.parse(response.body)
+
+        expect(merchants["data"].length).to eq(20)
+      end
 
 
 
